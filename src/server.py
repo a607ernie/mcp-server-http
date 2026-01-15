@@ -33,6 +33,15 @@ def get_weather(city: str) -> str:
     }
     return mock_weather_data.get(city, "此城市的天氣資料不可用。")
 
+@mcp.tool()
+def get_all_users() -> str:
+    """獲取所有用戶資訊（模擬實現）"""
+    return (
+        "用戶列表:\n"
+        "1. 小明, 年齡: 30, 電子郵件: xiaoming@example.com\n"
+        "2. 小華, 年齡: 25, 電子郵件: xiaohua@example.com\n"
+        "3. 小美, 年齡: 35, 電子郵件: xiaomei@example.com\n"
+    )
 
 @mcp.tool()
 def get_user_info(user_id: str) -> str:
