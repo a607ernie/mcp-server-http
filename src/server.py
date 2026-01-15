@@ -2,11 +2,24 @@
 # src/server.py
 import os
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 
 # 建立 MCP 伺服器
-mcp = FastMCP("mcp_demo_server")
+mcp = FastMCP(
+    "mcp-server-http",
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=False,
+    )
+)
 mcp.settings.host = "0.0.0.0"
-mcp.settings.port = int(os.environ.get("PORT", 8000))
+mcp.settings.port = int(os.environ.get("PORT", 8741))
+
+# 添加健康檢查路由
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request):
+    """健康檢查端點"""
+    from starlette.responses import JSONResponse
+    return JSONResponse({"status": "healthy"})
 
 @mcp.tool()
 def get_weather(city: str) -> str:
