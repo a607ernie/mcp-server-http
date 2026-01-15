@@ -10,6 +10,6 @@ services:
     autoDeploy: true
     envVars:
       - key: PYTHON_VERSION
-        value: 3.13
+        value: 3.13.4
       - key: MCP_TRANSPORT
         value: http
