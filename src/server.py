@@ -1,10 +1,12 @@
 
 # src/server.py
+import os
 from mcp.server.fastmcp import FastMCP
 
 # 建立 MCP 伺服器
 mcp = FastMCP("mcp_demo_server")
 mcp.settings.host = "0.0.0.0"
+mcp.settings.port = int(os.environ.get("PORT", 8000))
 
 @mcp.tool()
 def get_weather(city: str) -> str:
