@@ -31,7 +31,7 @@ jobs:
 
     - name: Run health check test
       run: |
-        python src/server.py &
+        PYTHONPATH=. python src/server.py &
         SERVER_PID=$!
         sleep 5
         curl -f http://localhost:8741/health
