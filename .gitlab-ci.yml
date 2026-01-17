@@ -1,0 +1,20 @@
+stages:
+  - test
+
+test:
+  stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t mcp-server-http:test .
+    - docker run --rm mcp-server-http:test pytest
+    - |
+      docker run -d --name mcp-server -p 8741:8741 mcp-server-http:test
+      sleep 5
+      apk add --no-cache curl
+      curl -f http://localhost:8741/health
+      docker stop mcp-server
+  only:
+    - master
+    - merge_requests
