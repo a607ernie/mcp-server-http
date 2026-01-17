@@ -11,7 +11,7 @@ test:
   script:
     - pytest
     - |
-      PYTHONPATH=. python src/server.py &
+      python -m src.server &
       SERVER_PID=$!
       sleep 5
       curl -f http://localhost:8741/health
