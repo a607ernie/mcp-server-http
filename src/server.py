@@ -2,12 +2,12 @@
 # src/server.py
 from mcp.server.fastmcp import FastMCP
 
-from .app.routes.health import register_health_routes
-from .app.tools.employees import register_employee_tools
-from .app.tools.products import register_product_tools
-from .app.tools.users import register_user_tools
-from .app.tools.weather import register_weather_tools
-from .settings import HOST, MCP_NAME, PORT, TRANSPORT_SECURITY
+from app.routes.health import register_health_routes
+from app.tools.employees import register_employee_tools
+from app.tools.products import register_product_tools
+from app.tools.users import register_user_tools
+from app.tools.weather import register_weather_tools
+from settings import HOST, MCP_NAME, PORT, TRANSPORT_SECURITY
 
 # 建立 MCP 伺服器
 mcp = FastMCP(
