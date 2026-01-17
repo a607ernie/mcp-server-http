@@ -3,18 +3,19 @@ stages:
 
 test:
   stage: test
-  image: docker:latest
-  services:
-    - docker:dind
+  image: python:3.13
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
   script:
-    - docker build -t mcp-server-http:test .
-    - docker run --rm mcp-server-http:test pytest
+    - pytest
     - |
-      docker run -d --name mcp-server -p 8741:8741 mcp-server-http:test
+      python src/server.py &
+      SERVER_PID=$!
       sleep 5
-      apk add --no-cache curl
       curl -f http://localhost:8741/health
-      docker stop mcp-server
-  only:
-    - master
-    - merge_requests
+      kill $SERVER_PID
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" || $CI_COMMIT_BRANCH == "master"'
+      when: always
+    - when: manual
