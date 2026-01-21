@@ -1,6 +1,5 @@
 
 # src/server.py
-from datetime import datetime
 from mcp.server.fastmcp import FastMCP
 
 from app.routes.health import register_health_routes
@@ -8,6 +7,7 @@ from app.tools.employees import register_employee_tools
 from app.tools.products import register_product_tools
 from app.tools.users import register_user_tools
 from app.tools.weather import register_weather_tools
+from app.tools.time import register_time_tools
 from settings import HOST, MCP_NAME, PORT, TRANSPORT_SECURITY
 
 # 建立 MCP 伺服器
@@ -24,14 +24,7 @@ register_weather_tools(mcp)
 register_user_tools(mcp)
 register_product_tools(mcp)
 register_employee_tools(mcp)
-
-
-@mcp.tool()
-def get_current_time() -> str:
-    """獲取當前時間"""
-    now = datetime.now()
-    return now.strftime("%Y-%m-%d %H:%M:%S")
-
+register_time_tools(mcp)
 
 if __name__ == "__main__":
     # 以 Streamable HTTP 啟動，Render 會以環境變數 PORT 指派埠號
