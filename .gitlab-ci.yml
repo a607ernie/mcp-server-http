@@ -1,0 +1,22 @@
+stages:
+  - test
+
+test:
+  stage: test
+  image: python:3.13
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install pytest
+  script:
+    - pytest
+    - |
+      PYTHONPATH=src:. python -m src.server &
+      SERVER_PID=$!
+      sleep 5
+      curl -f http://localhost:8741/health
+      kill $SERVER_PID
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" || $CI_COMMIT_BRANCH == "master"'
+      when: always
+    - when: manual
