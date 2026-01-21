@@ -1,6 +1,7 @@
 
 # src/server.py
 import os
+from datetime import datetime
 from mcp.server.fastmcp import FastMCP
 
 # 建立 MCP 伺服器
@@ -19,6 +20,7 @@ def get_weather(city: str) -> str:
         "Taipei": "晴天, 87°C",
     }
     return mock_weather_data.get(city, "此城市的天氣資料不可用。")
+
 
 
 @mcp.tool()
@@ -75,6 +77,14 @@ def get_employee_info(employee_id: str) -> str:
         "EMP004": "姓名: 林小智, 工號: EMP004, 廠區: 台中廠, 部門: 財務部, 可休假餘額: 12 天",
     }
     return mock_employee_data.get(employee_id, "找不到員工。")
+
+
+@mcp.tool()
+def get_current_time() -> str:
+    """獲取當前時間"""
+    now = datetime.now()
+    return now.strftime("%Y-%m-%d %H:%M:%S")
+
 
 if __name__ == "__main__":
     # 以 Streamable HTTP 啟動，Render 會以環境變數 PORT 指派埠號
