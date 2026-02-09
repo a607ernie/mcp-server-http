@@ -2,7 +2,7 @@
 # MCP Demo Server
 
 A minimal **Model Context Protocol (MCP)** server using **Streamable HTTP**,
-ready to deploy on **Render**.
+ready to deploy on **Render**
 
 - MCP path: `/mcp`
 - Transport: `streamable-http`
